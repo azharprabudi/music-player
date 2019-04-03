@@ -1,4 +1,6 @@
 import React, { PureComponent } from "react";
+import { connect } from "react-redux";
+import { searchArtist } from "actions/artist/artist";
 import "./homepage.css";
 
 class Homepage extends PureComponent {
@@ -6,8 +8,9 @@ class Homepage extends PureComponent {
     e.preventDefault();
   };
 
-  searchEntityMusic = e => {
+  onChange = e => {
     const { value: search } = e.target;
+    this.props.searchArtist(search);
   };
 
   render() {
@@ -22,11 +25,11 @@ class Homepage extends PureComponent {
         </div>
         <form onSubmit={this.onSubmit}>
           <div className="content">
-            <h1>Music Collection</h1>
+            <h1>Feel free to listen music at kosic</h1>
             <input
               type="text"
               className="search-music"
-              placeholder="Type for search artists, albums, tracks at here ..."
+              placeholder="type to search your favorite artist at here ..."
               onChange={this.onChange}
             />
           </div>
@@ -36,4 +39,9 @@ class Homepage extends PureComponent {
   }
 }
 
-export default Homepage;
+export default connect(
+  null,
+  {
+    searchArtist
+  }
+)(Homepage);

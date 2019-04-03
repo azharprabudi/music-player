@@ -3,7 +3,7 @@ import { createEpicMiddleware } from "redux-observable";
 import reduxLogger from "redux-logger";
 import { composeWithDevTools } from "redux-devtools-extension";
 import artistStore from "reducers/artist";
-import * as EpicRoot from "actions/epic_root";
+import rootEpic from "actions/root_epic";
 
 const reducers = combineReducers({
   artist: artistStore
@@ -22,9 +22,10 @@ const makeStore = () => {
       ? composeWithDevTools(applyMiddleware(...middlewares))
       : applyMiddleware(middlewares)
   );
+
+  reduxObservableMiddleware.run(...rootEpic);
+
   return store;
 };
-
-reduxObservableMiddleware.run(EpicRoot);
 
 export default makeStore;
